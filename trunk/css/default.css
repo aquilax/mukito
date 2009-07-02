@@ -1,0 +1,172 @@
+/* 
+    Document   : default template
+    Created on : Jun 28, 2009, 10:06:31 AM
+    Author     : aquilax
+    Description:
+        Default MuKiTo template follows
+*/
+body, html{
+  padding:0;
+  margin:0;
+  background:transparent url(/css/default/bg.jpg) repeat scroll 0 0;
+  font-family:'Trebuchet MS',Helvetica,sans-serif;
+  font-size:10pt;
+}
+
+ul{
+  list-style:none;
+  margin:0;
+  padding:0;
+}
+
+a{
+  color:#bebbb2;
+  text-decoration:none;
+}
+a:hover{
+  color:white;
+  text-decoration:underline;
+}
+/*
+  Main Template layout
+*/
+
+#wrapper {
+	text-align: left;
+	margin: 0px auto;
+	padding: 0px;
+	border:0;
+	width: 950px;
+  background:black url(/css/default/head.jpg) no-repeat scroll right top;
+}
+
+#header {
+  margin:0 auto;
+  height:280px;
+}
+#htitle{
+  padding:18px 0 0 530px;
+}
+
+#htitle a {
+  color:#3A0C0C;
+  font-size:2.5em;
+  text-decoration:none;
+}
+.spanel{
+  background-color:#555457;
+  margin: 10px;
+  padding-bottom:2px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+.spanel h3{
+  margin:0 0 5px 0;
+  padding:5px;
+  background-color:#454346;
+  -moz-border-radius-topleft: 5px;
+  -moz-border-radius-topright: 5px;
+  -webkit-border-radius-topleft: 5px;
+  -webkit-border-radius-topright: 5px;
+}
+.spanel li{
+  margin: 0 0 5px 5px;
+}
+
+#side-l {
+	float: left;
+	width: 200px;
+  background-color:#343336;
+  margin: 0 20px;
+  color:#848586;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+#side-r {
+	float: right;
+	width: 200px;
+  background-color:#343336;
+  margin: 0 20px 0 0;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+#content_wrapper {
+	float: left;
+	width: 49%;
+  background-color:#343336;
+  color:silver;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+}
+
+#content {
+  margin:10px;
+  padding:10px;
+  background-color:#4a494c;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+}
+
+#footer {
+	clear: both;
+}
+
+table{
+  width:100%;
+  font-size:0.8em;
+}
+
+blockquote{
+  font-style: italic;
+  margin: 0px;
+  quotes: "\201C" "\201D";
+  text-align:justify;
+  padding:5px;
+  font-size: 0.8em;
+}
+blockquote:before { content: open-quote; font-weight: bold; font-size: 1.2em}
+blockquote:after { content: close-quote; font-weight: bold; font-size: 1.2em}
+
+#login_form p{
+  margin:3px 0;
+}
+
+#login_form form{
+  padding:0 10px 5px;
+}
+input.text{
+  border: 1px solid #555457;
+}
+#login_form input.text{
+  width: 100%;
+}
+th{
+  background-color: #000;
+}
+label{
+  color:white;
+}
+#top {
+  background:silver url(/css/default/b.jpg) repeat scroll 0 0;
+  height:30px;
+  width:100%;
+}
+#top ul{
+  margin:0 auto;
+  width:960px;
+}
+#top ul li{
+  float:left;
+  margin: 5px;
+}
+#content h2{
+  margin: 0 0 0.5em 0;
+  border-bottom: 2px solid #343336;
+  padding-bottom:0.2em;
+}
+p.error {
+  margin: 0.1em 0;
+  color: #fe7c7c;
+}
