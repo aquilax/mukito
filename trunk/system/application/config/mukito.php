@@ -11,14 +11,19 @@ $config['server_name']	= "MuKiTo";
 //Keywords (separated with comma)
 $config['keywords']	= "mukito, mu online, private server";
 
-//Keywords (separated with comma)
+//Template to be used
 $config['template']	= "default.css";
 
 //Game Master control code
 $config['gm_ctlcode']	= 32;
 
+//Reset money
 $config['resetmoney'] = 10000;
+
+//Reset level
 $config['resetlevel'] = 300;
+
+//PK money
 $config['pkmoney'] = 20000;
 
 // Database tables
@@ -34,6 +39,4 @@ $config['t_guild'] = 'guild';
 $config['t_guildmember'] = 'guildmember';
 //Memb_info table
 $config['t_memb_info'] = 'MEMB_INFO';
-
-
 ?>
