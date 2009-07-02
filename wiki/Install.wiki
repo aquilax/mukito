@@ -47,7 +47,7 @@ $config['server_name']	= "MuKiTo";
 //Keywords (separated with comma)
 $config['keywords']	= "mukito, mu online, private server";
 
-//Keywords (separated with comma)
+//Template to be used
 $config['template']	= "default.css";
 
 //Game Master control code
