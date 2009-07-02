@@ -1,5 +1,5 @@
 #labels Phase-Deploy
-#How to install MuKiTo
+How to install MuKiTo
 
 = Introduction =
 
@@ -12,28 +12,29 @@ You need to manually (for now) configure two of the files:
 
 ==system/application/config/database.php==
 
-$db['default']['hostname'] = "MuOnline";
+{{{$db['default']['hostname'] = "MuOnline";}}}
 
 This is the DSN name for the database in case you're using SQL Server or the database server name if you're using MySQL
 
-$db['default']['username'] = "sa";
+{{{$db['default']['username'] = "sa";}}}
 
 Database's user
 
-$db['default']['password'] = "secret";
+{{{$db['default']['password'] = "secret";}}}
 
 Database's password
 
-$db['default']['database'] = "";
+{{{$db['default']['database'] = "";}}}
 
 Database's name for MySQL (leave empty for MsSQL)
 
-$db['default']['dbdriver'] = "odbc";
+{{{$db['default']['dbdriver'] = "odbc";}}}
 
 What database will be used. The options are *odbc* and *mysql*
 
 ==system/application/config/mukito.php==
 
+{{{
 //Base URL of the website
 $config['base_url']	= "http://musiter.localhost/";
 
@@ -54,4 +55,4 @@ $config['gm_ctlcode']	= 32;
 
 $config['resetmoney'] = 10000;
 $config['resetlevel'] = 300;
-$config['pkmoney'] = 20000;
+$config['pkmoney'] = 20000;}}}
