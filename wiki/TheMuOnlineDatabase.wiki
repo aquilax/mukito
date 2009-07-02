@@ -30,7 +30,10 @@ An example item is
 42 -> Item category (e.g. boots/swords/staffs/gloves/etc..) and the item id
 52 -> Item Level/Option/Luck/Skill
 FF -> Item Durability
-22222222 -> Item Serial Code (With every new item that drops in the server a mssql procedures is triggered, which increases the values of items dropped in the server by 1(one) and generated a hex value for the item serial. This is useful for preventing item duplications and to specific items.
+22222222 -> Item Serial Code (With every new item that drops in the server a mssql 
+procedures is triggered, which increases the values of items dropped in the server 
+by 1(one) and generated a hex value for the item serial. This is useful for preventing 
+item duplications and to specific items.
 84 -> Item Excellent option/ Second type (for some items) and value of an option>+16
 0000 -> Ancient Item Data
 -----------------------------
