@@ -9,6 +9,7 @@
     <th><?php echo lang('Vitality')?></th>
     <th><?php echo lang('Energy')?></th>
     <th><?php echo lang('Status')?></th>
+    <th><?php echo lang('Reset')?></th>
   </tr>
 <?php
   $c = 1;
@@ -26,6 +27,11 @@
       echo '<td class="green">'.lang('online').'</td>';
     } else {
       echo '<td class="red">'.lang('offline').'</td>';
+    }
+    if ($row['can_reset']){
+      echo '<td>'.anchor('character/reset/'.$row['name'], lang('reset')).'</td>';
+    } else {
+      echo '<td>X</td>';
     }
     echo '</tr>';
     $c++;

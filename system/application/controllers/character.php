@@ -27,7 +27,7 @@ class Character extends AQX_Controller{
     }
     $status = $this->character_model->getCharStatus($cname, $this->uid);
     if ($status && $this->character_model->canReset($status)){
-      $this->data['message'] = $this->character_model->reset($cname, $status);
+      $this->data['message'] = $this->character_model->resetCharacter($cname, $status);
       $this->render();
     } else {
       redirect('');

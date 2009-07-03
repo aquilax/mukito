@@ -45,15 +45,17 @@ class Character_model extends Model {
 
   function getCharStatus($cname, $uid){
     $this->db->select('clevel,resets,money,leveluppoint,class');
-    $this->where('accountid', $uid);
-    $this->where('name', $cname);
+    $this->db->where('accountid', $uid);
+    $this->db->where('name', $cname);
     $query = $this->db->get($this->t_character, 1);
-    return $query->result_array();
+    $ary = $query->row_array();
+    $ary['is_online'] = $this->getCharacterIsOnline($cname);
+    return $ary;
   }
 
   function resetCharacter($cname, $status){
     $resetmode = $this->config->item('resetmode');
-    $levelupmode = $this->config->item('resetmode');
+    $levelupmode = $this->config->item('levelupmode');
     $clean_inventory = $this->config->item('clean_inventory');
     $clean_skills = $this->config->item('clean_skills');
 
@@ -149,7 +151,7 @@ class Character_model extends Model {
       }
       $ret[] = sprintf(lang('Character %s needs Level %d to Reset'), $status['name'], $resetlevel);
     }
-    if ($status['clevel'] >= $resetslimit){
+    if ($status['clevel'] >= $resetlimit){
       if($only_status){
         return FALSE;
       }

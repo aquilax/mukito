@@ -18,16 +18,32 @@ $config['template']	= "default.css";
 $config['gm_ctlcode']	= 32;
 
 //Reset money
-$config['resetmoney'] = 10000;
+$config['resetmoney'] = 10;
+
+//Reset money
+$config['resetpoints'] = 10;
 
 //Reset level
-$config['resetlevel'] = 300;
+$config['resetlevel'] = 3;
 
 //Maximum Reset level
-$config['resetslimit'] = 150;
+$config['resetlimit'] = 150;
 
 //PK money
 $config['pkmoney'] = 20000;
+
+//Reset mode [keep;reset]
+$config['resetmode'] = 'reset';
+
+//Level Up mode [normal;extra]
+$config['levelupmode'] = 'normal';
+
+//Clean Inventory [yes;no]
+$config['clean_inventory'] = 'no';
+
+//Clean Skills [yes;no]
+$config['clean_skills'] = 'no';
+
 
 // Database tables
 // Don't change these unless you have a good reason to
