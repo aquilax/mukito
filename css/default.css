@@ -170,3 +170,9 @@ p.error {
   margin: 0.1em 0;
   color: #fe7c7c;
 }
+.green{
+  color:green;
+}
+.red{
+  color:#fb5a5a;
+}

@@ -15,16 +15,23 @@ class Character extends AQX_Controller{
     if (!$this->logged){
       redirect('');
     }
+    $this->data['title'] = lang('Characters info');
+    $this->data['heading'] = lang('Characters info');
     $this->data['characters'] = $this->character_model->getCharactersForAccount($this->uid);
     $this->render();
   }
 
-  function reset(){
+  function reset($cname){
     if (!$this->logged){
       redirect('');
     }
-
-    $this->render();
+    $status = $this->character_model->getCharStatus($cname, $this->uid);
+    if ($status && $this->character_model->canReset($status)){
+      $this->data['message'] = $this->character_model->reset($cname, $status);
+      $this->render();
+    } else {
+      redirect('');
+    }
   }
 
   function add_stats(){
