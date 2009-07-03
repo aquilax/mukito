@@ -23,6 +23,9 @@ $config['resetmoney'] = 10000;
 //Reset level
 $config['resetlevel'] = 300;
 
+//Maximum Reset level
+$config['resetslimit'] = 150;
+
 //PK money
 $config['pkmoney'] = 20000;
 
@@ -32,7 +35,7 @@ $config['pkmoney'] = 20000;
 //Character table
 $config['t_character'] = 'Character';
 //Mem_stat table
-$config['t_memb_stat'] = 'memb_stat';
+$config['t_memb_stat'] = 'MEMB_STAT';
 //Guild table
 $config['t_guild'] = 'guild';
 //Guildmember table

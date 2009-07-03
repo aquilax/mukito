@@ -16,16 +16,23 @@ class Character_model extends Model {
   }
 
   function getCharactersForAccount($name){
-    $this->db->select('name,class,clevel,resets,strength,dexterity,vitality,energy,mapnumber,accountid');
+    $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,mapnumber,accountid');
     $this->db->where('AccountID', $name);
     $this->db->order_by('Resets', 'desc');
     $this->db->order_by('cLevel', 'desc');
     $query = $this->db->get($this->t_character);
-    return $query->result_array();
+    $ary = $query->result_array();
+    $c = count($ary);
+    for ($i = 0; $i < $c; $i++){
+      //This can be optimized (join connectstat)
+      $ary[$i]['is_online'] = $this->getCharacterIsOnline($ary[$i]['name']);
+      $ary[$i]['can_reset'] = $this->canReset($ary[$i]);
+    }
+    return $ary;
   }
 
   function getCharacterIsOnline($cname){
-    $this->select('connectstat');
+    $this->db->select('connectstat');
     $this->db->where('memb___id', $cname);
     $query = $this->db->get($this->t_memb_stat, 1);
     if ($query->num_rows() ==0){
@@ -44,7 +51,7 @@ class Character_model extends Model {
     return $query->result_array();
   }
 
-  function resetCharacter($cname){
+  function resetCharacter($cname, $status){
     $resetmode = $this->config->item('resetmode');
     $levelupmode = $this->config->item('resetmode');
     $clean_inventory = $this->config->item('clean_inventory');
@@ -114,6 +121,45 @@ class Character_model extends Model {
     
     $this->db->query($sql_reset_script, array($cname));
     $this->db->query($sql_reset_script2, array($cname));
+  }
+
+  function canReset($status, $only_status = TRUE){
+    $resetmoney = $this->config->item('resetmoney');
+    $resetlevel = $this->config->item('resetlevel');
+    $resetlimit = $this->config->item('resetlimit');
+
+    if (!$only_status){
+      $ret = array();
+    }
+    if ($status['is_online']){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Character %s is Online. Must be Offlne to reset'), $status['name']);
+    }
+    if ($status['money'] < $resetmoney){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Character %s needs %d Zen to Reset'), $status['name'], $resetmoney);
+    }
+    if ($status['clevel'] < $resetlevel){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Character %s needs Level %d to Reset'), $status['name'], $resetlevel);
+    }
+    if ($status['clevel'] >= $resetslimit){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Resets limit is set to %s'), $resetlimit);
+    }
+    if($only_status){
+      return TRUE;
+    } else {
+      return $ret;
+    }
   }
 }
 ?>
