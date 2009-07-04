@@ -25,13 +25,21 @@ class Character extends AQX_Controller{
     if (!$this->logged){
       redirect('');
     }
+    $this->data['title'] = lang('Reset character');
+    $this->data['heading'] = lang('Reset character');
+    $msg = array();
     $status = $this->character_model->getCharStatus($cname, $this->uid);
-    if ($status && $this->character_model->canReset($status)){
-      $this->data['message'] = $this->character_model->resetCharacter($cname, $status);
-      $this->render();
+    if ($status){
+      $msg =  $this->character_model->canReset($status, FALSE);
+      if (count($msg) == 0){
+        $this->data['messages'] = $this->character_model->resetCharacter($cname, $status);
+      } else {
+        $this->data['messages'] = $msg;
+      }
     } else {
-      redirect('');
+      $this->data['messages'] = sprintf(lang('Character %s not found'), $cname);
     }
+    $this->render();
   }
 
   function add_stats(){
