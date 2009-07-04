@@ -53,6 +53,30 @@ $config['template']	= "default.css";
 //Game Master control code
 $config['gm_ctlcode']	= 32;
 
-$config['resetmoney'] = 10000;
-$config['resetlevel'] = 300;
-$config['pkmoney'] = 20000;}}}
+//Reset money
+$config['resetmoney'] = 10;
+
+//Reset money
+$config['resetpoints'] = 10;
+
+//Reset level
+$config['resetlevel'] = 3;
+
+//Maximum Reset level
+$config['resetlimit'] = 150;
+
+//PK money
+$config['pkmoney'] = 20000;
+
+//Reset mode [keep;reset]
+$config['resetmode'] = 'reset';
+
+//Level Up mode [normal;extra]
+$config['levelupmode'] = 'normal';
+
+//Clean Inventory [yes;no]
+$config['clean_inventory'] = 'no';
+
+//Clean Skills [yes;no]
+$config['clean_skills'] = 'no';
+}}}
