@@ -21,9 +21,22 @@ class Character extends AQX_Controller{
     $this->render();
   }
 
-  function reset($cname){
+  function reset(){
     if (!$this->logged){
       redirect('');
+    }
+    $cname = $this->uri->segment(3);
+    if (!$cname){
+      if (isset($_POST['cname'])){
+        $cname = $_POST['cname'];
+        if (!$cname){
+          $this->render();
+          return;
+        }
+      } else {
+        $this->render();
+        return;
+      }
     }
     $this->data['title'] = lang('Reset character');
     $this->data['heading'] = lang('Reset character');
@@ -37,7 +50,7 @@ class Character extends AQX_Controller{
         $this->data['messages'] = $msg;
       }
     } else {
-      $this->data['messages'] = sprintf(lang('Character %s not found'), $cname);
+      $this->data['messages'][] = sprintf(lang('Character %s not found'), $cname);
     }
     $this->render();
   }

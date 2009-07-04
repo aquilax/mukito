@@ -49,7 +49,9 @@ class Character_model extends Model {
     $this->db->where('name', $cname);
     $query = $this->db->get($this->t_character, 1);
     $ary = $query->row_array();
-    $ary['is_online'] = $this->getCharacterIsOnline($cname);
+    if ($ary){
+      $ary['is_online'] = $this->getCharacterIsOnline($cname);
+    }
     return $ary;
   }
 
