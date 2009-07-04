@@ -44,7 +44,7 @@ class Character_model extends Model {
   }
 
   function getCharStatus($cname, $uid){
-    $this->db->select('clevel,resets,money,leveluppoint,class');
+    $this->db->select('clevel,resets,money,name,leveluppoint,class');
     $this->db->where('accountid', $uid);
     $this->db->where('name', $cname);
     $query = $this->db->get($this->t_character, 1);
@@ -123,6 +123,7 @@ class Character_model extends Model {
     
     $this->db->query($sql_reset_script, array($cname));
     $this->db->query($sql_reset_script2, array($cname));
+    return array(sprintf(lang('Character %s is reset successfully'), $cname));
   }
 
   function canReset($status, $only_status = TRUE){
