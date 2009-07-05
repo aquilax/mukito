@@ -204,8 +204,29 @@ class Character_model extends Model {
     $denominator = $strength+$dexterity+$vitality+$energy+$leadership;
     if ($denominator > $status['leveluppoint']){
       $res[] = sprintf(lang('You have only %d points'), $status['leveluppoint']);
+    }
+    if ($status['is_online']){
+      $ret[] = sprintf(lang('Character %s is Online. Must be Offlne to reset'), $status['name']);   
+    }
+    if ($status['strength']+$strength > 32500){
+      $ret[] = sprintf(lang('Strength can go up to %d points only'), 32500);
+    }
+    if ( $status['dexterity']+$dexterity > 32500){
+      $ret[] = sprintf(lang('Agility can go up to %d points only'), 32500);
+    }
+    if ($status['vitality']+$vitality > 32500){
+      $ret[] = sprintf(lang('Vitality can go up to %d points only'), 32500);
+    }
+    if ($status['energy']+$energy > 32500){
+      $ret[] = sprintf(lang('Energy can go up to %d points only'), 32500);
+    }
+    if ($status['leadership']-$leadership > 32500){
+      $ret[] = sprintf(lang('Command can go up to %d points only'), 32500);
+    }
+    if (count($res) > 0){
       return $res;
     }
+    //checks
     $this->db->where('accountid', $uid);
     $this->db->where('name', $cname);
     $data = array(
@@ -216,7 +237,7 @@ class Character_model extends Model {
       'energy' => $status['energy']+$energy,
     );
     if (isset($status['leadership'])){
-      $data['leadership'] = $status['leadership']-$leadership;
+      $data['leadership'] = $status['leadership']+$leadership;
     }
     $this->db->update($this->t_character, $data);
     $res[] = sprintf(lang('New stats are set'));
