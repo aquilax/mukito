@@ -8,6 +8,7 @@ class Character_model extends Model {
 
   var $t_character = 'Character';
   var $t_memb_stat = 'memb_stat';
+  var $has_DL = 0; //if game supports Dark Lord
 
   function Character_model(){
     parent::Model();
@@ -15,8 +16,25 @@ class Character_model extends Model {
     $this->t_memb_stat = $this->config->item('t_memb_stat');
   }
 
+  function _getDL(){
+    if ($this->has_DL === 0){
+      $this->db->where('class', 64);
+      $res = $this->db->count_all_results($this->t_character);
+      if ($res == 0){
+        $this->has_DL = FALSE;
+      } else {
+        $this->has_DL = TRUE;
+      }
+    }
+    return $this->has_DL;
+  }
+
   function getCharactersForAccount($name){
-    $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,mapnumber,accountid');
+    if ($this->_getDL()){
+      $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,leadership,mapnumber,accountid');
+    } else {
+      $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,mapnumber,accountid');
+    }
     $this->db->where('AccountID', $name);
     $this->db->order_by('Resets', 'desc');
     $this->db->order_by('cLevel', 'desc');
@@ -44,7 +62,11 @@ class Character_model extends Model {
   }
 
   function getCharStatus($cname, $uid){
-    $this->db->select('clevel,resets,money,name,leveluppoint,class');
+    if ($this->_getDL()){
+      $this->db->select('clevel,resets,money,name,leveluppoint,class,strength,dexterity,vitality,energy,leadership');
+    } else {
+      $this->db->select('clevel,resets,money,name,leveluppoint,class,strength,dexterity,vitality,energy');
+    }
     $this->db->where('accountid', $uid);
     $this->db->where('name', $cname);
     $query = $this->db->get($this->t_character, 1);
@@ -165,6 +187,40 @@ class Character_model extends Model {
     } else {
       return $ret;
     }
+  }
+
+  function addPonts($uid, $post, $status){
+    $res = array();
+    $cname = $status['name'];
+    $strength = $post['strength'];
+    $dexterity = $post['agility'];
+    $vitality = $post['vitality'];
+    $energy = $post['energy'];
+    if (isset($status['leadership'])){
+      $leadership = $post['command'];
+    } else {
+      $leadership = 0;
+    }
+    $denominator = $strength+$dexterity+$vitality+$energy+$leadership;
+    if ($denominator > $status['leveluppoint']){
+      $res[] = sprintf(lang('You have only %d points'), $status['leveluppoint']);
+      return $res;
+    }
+    $this->db->where('accountid', $uid);
+    $this->db->where('name', $cname);
+    $data = array(
+      'leveluppoint' => $status['leveluppoint']-$denominator,
+      'strength' => $status['strength']+$strength,
+      'dexterity' => $status['dexterity']+$dexterity,
+      'vitality' => $status['vitality']+$vitality,
+      'energy' => $status['energy']+$energy,
+    );
+    if (isset($status['leadership'])){
+      $data['leadership'] = $status['leadership']-$leadership;
+    }
+    $this->db->update($this->t_character, $data);
+    $res[] = sprintf(lang('New stats are set'));
+    return $res;
   }
 }
 ?>
