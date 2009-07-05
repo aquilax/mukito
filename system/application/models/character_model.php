@@ -206,7 +206,7 @@ class Character_model extends Model {
       $res[] = sprintf(lang('You have only %d points'), $status['leveluppoint']);
     }
     if ($status['is_online']){
-      $ret[] = sprintf(lang('Character %s is Online. Must be Offlne to reset'), $status['name']);   
+      $ret[] = sprintf(lang('Character %s is Online. Must be Offlne to add stats'), $status['name']);
     }
     if ($status['strength']+$strength > 32500){
       $ret[] = sprintf(lang('Strength can go up to %d points only'), 32500);
