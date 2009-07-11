@@ -10,6 +10,7 @@
     <th><?php echo lang('Energy')?></th>
     <th><?php echo lang('Status')?></th>
     <th><?php echo lang('Reset')?></th>
+    <th><?php echo lang('Clear PK')?></th>
   </tr>
 <?php
   $c = 1;
@@ -30,6 +31,11 @@
     }
     if ($row['can_reset']){
       echo '<td>'.anchor('character/reset/'.$row['name'], lang('reset')).'</td>';
+    } else {
+      echo '<td>X</td>';
+    }
+    if ($row['can_clear']){
+      echo '<td>'.anchor('character/clear_pk/'.$row['name'], lang('clear')).'</td>';
     } else {
       echo '<td>X</td>';
     }

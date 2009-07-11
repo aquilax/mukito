@@ -31,9 +31,9 @@ class Character_model extends Model {
 
   function getCharactersForAccount($name){
     if ($this->_getDL()){
-      $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,leadership,mapnumber,accountid');
+      $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,leadership,mapnumber,accountid,pklevel');
     } else {
-      $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,mapnumber,accountid');
+      $this->db->select('name,class,clevel,resets,money,strength,dexterity,vitality,energy,mapnumber,accountid,pklevel');
     }
     $this->db->where('AccountID', $name);
     $this->db->order_by('Resets', 'desc');
@@ -45,6 +45,7 @@ class Character_model extends Model {
       //This can be optimized (join connectstat)
       $ary[$i]['is_online'] = $this->getCharacterIsOnline($ary[$i]['name']);
       $ary[$i]['can_reset'] = $this->canReset($ary[$i]);
+      $ary[$i]['can_clear'] = $this->canClearPK($ary[$i]);
     }
     return $ary;
   }
@@ -63,9 +64,9 @@ class Character_model extends Model {
 
   function getCharStatus($cname, $uid){
     if ($this->_getDL()){
-      $this->db->select('clevel,resets,money,name,leveluppoint,class,strength,dexterity,vitality,energy,leadership');
+      $this->db->select('clevel,resets,money,name,leveluppoint,class,strength,dexterity,vitality,energy,leadership,pklevel,pkcount');
     } else {
-      $this->db->select('clevel,resets,money,name,leveluppoint,class,strength,dexterity,vitality,energy');
+      $this->db->select('clevel,resets,money,name,leveluppoint,class,strength,dexterity,vitality,energy,pklevel,pkcount');
     }
     $this->db->where('accountid', $uid);
     $this->db->where('name', $cname);
@@ -240,7 +241,55 @@ class Character_model extends Model {
       $data['leadership'] = $status['leadership']+$leadership;
     }
     $this->db->update($this->t_character, $data);
-    $res[] = sprintf(lang('New stats are set'));
+    $res[] = lang('New stats are set');
+    return $res;
+  }
+
+  function canClearPK($status, $only_status = TRUE){
+    $pkmoney = $this->config->item('pkmoney');
+
+    if (!$only_status){
+      $ret = array();
+    }
+    if ($status['is_online']){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Character %s is Online. Must be Offlne to clear PK'), $status['name']);
+    }
+    if ($status['money'] < $pkmoney){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Character %s needs %d Zen to clear PK'), $status['name'], $pkmoney);
+    }
+    if ($status['pklevel'] <= 3){
+      if($only_status){
+        return FALSE;
+      }
+      $ret[] = sprintf(lang('Character %s Is Not a Killer, 2nd Level Killer Or a Phono!'), $status['name']);
+    }
+    if($only_status){
+      return TRUE;
+    } else {
+      return $ret;
+    }
+  }
+
+  function clearCharacter($uid, $cname, $status){
+    $pkmoney = $this->config->item('pkmoney');
+ 
+    $this->db->where('accountid', $uid);
+    $this->db->where('name', $cname);
+
+    $money = $status['money'] - $pkmoney;
+    $data = array(
+      'pklevel' => 3,
+      'pktime' => 0,
+      'money' => $money,
+    );
+    $this->db->update($this->t_character, $data);
+    $res[] = sprintf(lang('%s has been successfully cleared'), $cname);
     return $res;
   }
 }
