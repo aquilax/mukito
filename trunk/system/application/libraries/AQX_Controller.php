@@ -30,6 +30,8 @@ class AQX_Controller extends Controller {
     $this->data['css'] = $this->config->item('template');
     $this->data['path']['home'] = lang('Home');
     $this->data['logged'] = $this->user_model->logged();
+    $this->data['top_characters'] = $this->stat_model->getTopPlayers(10);
+    $this->data['top_guilds'] = $this->stat_model->getTopGuilds(10);
     $this->logged = $this->data['logged'];
     $this->data['uid'] = $this->user_model->getId();
     $this->uid = $this->data['uid'];
