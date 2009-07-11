@@ -13,7 +13,6 @@ class Stat extends AQX_Controller{
 
   function Stat(){
     parent::__construct();
-    $this->load->model('stat_model');
   }
 
   function index(){
@@ -27,7 +26,7 @@ class Stat extends AQX_Controller{
   function ranking(){
     $this->data['title'] = lang('Ranking');
     $this->data['heading'] = lang('Ranking');
-    $this->data['rating'] = $this->stat_model->getTopPlayers(0, 10);
+    $this->data['rating'] = $this->stat_model->getTopPlayers(10);
     $this->render();
   }
 

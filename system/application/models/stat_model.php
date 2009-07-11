@@ -65,7 +65,7 @@ class Stat_model extends Model{
     return $res;
   }
 
-  function getTopPlayers($race, $limit){
+  function getTopPlayers($limit, $race = FALSE){
     if($race){
       $this->db->where('class', $race);
     }

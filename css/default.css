@@ -18,6 +18,11 @@ ul{
   margin:0;
   padding:0;
 }
+ol{
+  margin:0;
+  padding:0;
+  list-style-position:inside;
+}
 
 a{
   color:#bebbb2;
@@ -90,6 +95,9 @@ a:hover{
   margin: 0 20px 0 0;
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
+}
+#side-r h3{
+  color:#848586;
 }
 
 #content_wrapper {
