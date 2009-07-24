@@ -184,3 +184,6 @@ p.error {
 .red{
   color:#fb5a5a;
 }
+#status p{
+  text-align:center;
+}

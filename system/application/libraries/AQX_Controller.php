@@ -22,6 +22,11 @@ class AQX_Controller extends Controller {
   }
 
   protected function load_defaults() {
+    $dsn = $this->config->item('dsn');
+    if (!$dsn){
+      redirect('install');
+    }
+    $this->load->database($dsn);
     $this->data['server_name'] = $this->config->item('server_name');
     $this->data['keywords'] = $this->config->item('keywords');
     $this->data['title'] = 'Page Title';
@@ -35,7 +40,8 @@ class AQX_Controller extends Controller {
     $this->logged = $this->data['logged'];
     $this->data['uid'] = $this->user_model->getId();
     $this->uid = $this->data['uid'];
-
+    $this->data['online'] = $this->user_model->checkServer();
+    
     $this->class_name = strtolower(get_class($this));
     $this->action = $this->uri->segment(2, 'index');
   }
