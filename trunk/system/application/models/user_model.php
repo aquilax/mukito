@@ -113,5 +113,20 @@ class User_model extends Model{
     $this->db->update($this->t_memb_info, $data);
     return TRUE;
   }
+
+  function checkServer(){
+    $ip = $this->config->item('server_ip');
+    $port = $this->config->item('server_port');
+
+    if ($ip){
+      $fp = @fsockopen($ip, $port, $errno, $errstr,5);
+      if(!$fp) {
+        return FALSE;
+      } else {
+        return TRUE;
+        fclose($fp);
+      }
+    }
+  }
 }
 ?>

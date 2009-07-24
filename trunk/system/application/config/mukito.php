@@ -2,6 +2,9 @@
 //Base URL of the website
 $config['base_url']	= "http://musiter.localhost/";
 
+//Database DSN
+$config['dsn'] = 'mysql://root:@localhost/dbo';
+
 //Website language
 $config['language']	= "english";
 
@@ -13,6 +16,12 @@ $config['keywords']	= "mukito, mu online, private server";
 
 //Template to be used
 $config['template']	= "default.css";
+
+//Server IP
+$config['server_ip']	= "127.0.0.1";
+
+//Server Port
+$config['server_port']	= "44405";
 
 //Game Master control code
 $config['gm_ctlcode']	= 32;
