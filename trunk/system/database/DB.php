@@ -68,7 +68,6 @@ function &DB($params = '', $active_record_override = FALSE)
 							'password'	=> (isset($dns['pass'])) ? rawurldecode($dns['pass']) : '',
 							'database'	=> (isset($dns['path'])) ? rawurldecode(substr($dns['path'], 1)) : ''
 						);
-		
 		// were additional config items set?
 		if (isset($dns['query']))
 		{
