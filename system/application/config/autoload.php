@@ -79,7 +79,7 @@ $autoload['plugin'] = array();
 |
 */
 
-$autoload['config'] = array('mukito');
+$autoload['config'] = array();
 
 
 /*
@@ -108,7 +108,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('user_model', 'stat_model');
+$autoload['model'] = array('config_model', 'user_model', 'stat_model');
 
 
 
