@@ -177,7 +177,7 @@ class Character_model extends Model {
       }
       $ret[] = sprintf(lang('Character %s needs Level %d to Reset'), $status['name'], $resetlevel);
     }
-    if ($status['clevel'] >= $resetlimit){
+    if ($status['resets'] >= $resetlimit){
       if($only_status){
         return FALSE;
       }

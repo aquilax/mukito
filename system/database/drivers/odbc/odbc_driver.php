@@ -245,7 +245,8 @@ class CI_DB_odbc_driver extends CI_DB {
 		$CI =& get_instance();
 
 		// ODBC doesn't require escaping
-		return $CI->_remove_invisible_characters($str);
+    return $CI->input->_remove_invisible_characters($str);
+		//return $CI->_remove_invisible_characters($str);
 	}
 	
 	// --------------------------------------------------------------------

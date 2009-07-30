@@ -8,7 +8,7 @@
 body, html{
   padding:0;
   margin:0;
-  background:transparent url(/css/default/bg.jpg) repeat scroll 0 0;
+  background:transparent url(default/bg.jpg) repeat scroll 0 0;
   font-family:'Trebuchet MS',Helvetica,sans-serif;
   font-size:10pt;
 }
@@ -42,7 +42,7 @@ a:hover{
 	padding: 0px;
 	border:0;
 	width: 950px;
-  background:black url(/css/default/head.jpg) no-repeat scroll right top;
+  background:black url(default/head.jpg) no-repeat scroll right top;
 }
 
 #header {
@@ -157,7 +157,7 @@ label{
   color:white;
 }
 #top {
-  background:silver url(/css/default/b.jpg) repeat scroll 0 0;
+  background:silver url(default/b.jpg) repeat scroll 0 0;
   height:30px;
   width:100%;
 }
