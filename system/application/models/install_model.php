@@ -74,7 +74,7 @@ class Install_model extends Model{
     if ($this->dbforge->create_table('mukito', TRUE)){
       //Init settings
       $this->db->truncate('mukito');
-      $this->_addKv('base_url', '');
+      $this->_addKv('base_url', 'http://'.$_SERVER['HTTP_HOST'].'/');
       $this->_addKv('language', 'english');
       $this->_addKv('server_name', 'MuKiTo');
       $this->_addKv('keywords', 'mukito, mu online, private server');
