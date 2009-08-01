@@ -6,24 +6,16 @@
  */
 class Config_model extends Model{
 
-  public $config_file = 'config/mukito.ini.php';
-
-  function Config_model(){
-    parent::__construct();
-    if (!$this->load(APPPATH.$this->config_file)){
-      die('Config file not found');
+  function load(){
+    $query = $this->db->get('mukito');
+    $res = $query->result_array();
+    if ($res){
+      foreach($res as $row){
+        $this->config->set_item($row['name'], $row['val']);
+      }
+      return TRUE;
     }
-  }
-
-  function load($file){
-    $ary = parse_ini_file($file, FALSE);
-    if (!$ary){
-      return FALSE;
-    }
-    foreach($ary as $key => $val){
-      $this->config->set_item($key, $val);
-    }
-    return TRUE;
+    return FALSE;
   }
 }
 ?>

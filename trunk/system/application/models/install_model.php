@@ -36,7 +36,7 @@ class Install_model extends Model{
     $dsn = $this->getDatabaseConfig($post);
     $text = "//Database connection\n";
     $text .= "\$config['dsn'] = '$dsn';\n";
-    $this->addLines($text);
+    return $this->addLines($text);
   }
 
   function addLines($text){
@@ -46,7 +46,64 @@ class Install_model extends Model{
       die('Config file not found');
     }
     $new = $old.$text;
-    write_file($file, $new);
+    return write_file($file, $new);
+  }
+
+  function createTables(){
+    $this->load->dbforge();
+    $fields = array(
+      'id' => array(
+        'type' => 'INT',
+        'constraint' => 5,
+        'unsigned' => TRUE,
+        'auto_increment' => TRUE
+      ),
+      'name' => array(
+        'type' => 'VARCHAR',
+        'constraint' => '30',
+        'default' => '',
+      ),
+      'val' => array(
+        'type' =>'VARCHAR',
+        'constraint' => '100',
+        'default' => '',
+      )
+    );
+    $this->dbforge->add_field($fields);
+    $this->dbforge->add_key('id', TRUE);
+    if ($this->dbforge->create_table('mukito', TRUE)){
+      //Init settings
+      $this->db->truncate('mukito');
+      $this->_addKv('base_url', '');
+      $this->_addKv('language', 'english');
+      $this->_addKv('server_name', 'MuKiTo');
+      $this->_addKv('keywords', 'mukito, mu online, private server');
+      $this->_addKv('template', 'default.css');
+      $this->_addKv('server_ip', '127.0.0.1');
+      $this->_addKv('server_port', '44405');
+      $this->_addKv('gm_ctlcode', '32');
+      $this->_addKv('resetmoney', '10');
+      $this->_addKv('resetpoints', '10');
+      $this->_addKv('resetlevel', '3');
+      $this->_addKv('resetlimit', '150');
+      $this->_addKv('pkmoney', '20000');
+      $this->_addKv('resetmode', 'reset');
+      $this->_addKv('levelupmode', 'normal');
+      $this->_addKv('clean_inventory', 'no');
+      $this->_addKv('clean_skills', 'no');
+      $this->_addKv('t_character', 'Character');
+      $this->_addKv('t_memb_stat', 'MEMB_STAT');
+      $this->_addKv('t_guild', 'guild');
+      $this->_addKv('t_guildmember', 'guildmember');
+      $this->_addKv('t_memb_info', 'MEMB_INFO');
+      return TRUE;
+    }
+    return FALSE;
+  }
+
+  function _addKv($key, $value){
+    $data = array('name' => $key, 'val' => $value);
+    $this->db->insert('mukito', $data);
   }
 }
 ?>

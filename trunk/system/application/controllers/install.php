@@ -36,8 +36,15 @@ class Install extends Controller{
       $this->load->view('install/indextpl');
 		} else {
       if ($this->install_model->checkConnection($_POST)){
-        $this->install_model->writeDatabaseConfig($_POST);
-        redirect('install/step2');
+        if ($this->install_model->writeDatabaseConfig($_POST)){
+          if ($this->install_model->createTables()){
+            redirect('install/step2');
+          } else {
+            die('Cannot create configuration table');
+          }
+        } else {
+          die('Cannot write database configuration');
+        }
       } else {
         $this->load->view('install/indextpl');
       }
