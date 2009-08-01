@@ -26,7 +26,10 @@ class AQX_Controller extends Controller {
     if (!$dsn){
       redirect('install');
     }
-    echo $this->load->database($dsn);
+    $this->load->database($dsn);
+    $this->config_model->load();
+    $this->load->model('user_model');
+    $this->load->model('stat_model');
     $this->data['server_name'] = $this->config->item('server_name');
     $this->data['keywords'] = $this->config->item('keywords');
     $this->data['title'] = 'Page Title';
