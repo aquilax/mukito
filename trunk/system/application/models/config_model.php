@@ -7,8 +7,7 @@
 class Config_model extends Model{
 
   function load(){
-    $query = $this->db->get('mukito');
-    $res = $query->result_array();
+    $res = $this->getSettings();
     if ($res){
       foreach($res as $row){
         $this->config->set_item($row['name'], $row['val']);
@@ -16,6 +15,15 @@ class Config_model extends Model{
       return TRUE;
     }
     return FALSE;
+  }
+
+  function getSettings(){
+    $query = $this->db->get('mukito');
+    $res = $query->result_array();
+    if ($res){
+      return $res;
+    }
+    return array();
   }
 }
 ?>

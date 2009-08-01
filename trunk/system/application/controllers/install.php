@@ -33,7 +33,7 @@ class Install extends Controller{
     $this->form_validation->set_rules('pass', lang('Password'), 'trim');
    
 		if ($this->form_validation->run() == FALSE){
-      $this->load->view('install/indextpl');
+      $this->load->view('install/indextpl', $data);
 		} else {
       if ($this->install_model->checkConnection($_POST)){
         if ($this->install_model->writeDatabaseConfig($_POST)){
@@ -46,7 +46,7 @@ class Install extends Controller{
           die('Cannot write database configuration');
         }
       } else {
-        $this->load->view('install/indextpl');
+        $this->load->view('install/indextpl', $data);
       }
 		}
   }
@@ -56,11 +56,16 @@ class Install extends Controller{
     if (!$dsn){
       redirect('install');
     }
-    $this->load->database($dsn);
 
     $data['title'] = lang('Install &raquo; Step 2');
     $data['heading'] = lang('Create server administrator');
     
+    $this->load->database($dsn);
+    $this->load->model('config_model');
+    $res = $this->config_model->getSettings();
+    foreach($res as $row){
+      $data[$row['name']] = $row['val'];
+    }
 		$this->load->library('form_validation');
     $this->form_validation->set_error_delimiters('<p class="error">', '</p>');
 
@@ -70,13 +75,13 @@ class Install extends Controller{
     $this->form_validation->set_rules('pass', lang('Password'), 'trim');
 
 		if ($this->form_validation->run() == FALSE){
-      $this->load->view('install/indextpl');
+      $this->load->view('install/step2tpl', $data);
 		} else {
       if ($this->install_model->checkConnection($_POST)){
         $this->install_model->writeDatabaseConfig($_POST);
         redirect('install/step2');
       } else {
-        $this->load->view('install/indextpl');
+        $this->load->view('install/step2tpl', $data);
       }
 		}
   }
