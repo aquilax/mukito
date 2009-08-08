@@ -29,7 +29,12 @@ class User_model extends Model{
     }
   }
 
-  function register($post){
+  function register($post, $admin = FALSE){
+    if ($admin){
+      $admin = 1;
+    } else {
+      $admin = 0;
+    }
     $data = array(
       'memb___id' => $post['user'],
       'memb__pwd' => $post['pass'],
@@ -43,30 +48,14 @@ class User_model extends Model{
       'mail_chek' => '1',
       'bloc_code' => '0',
       'ctl1_code' => '0',
+      'admin'     => $admin,
       //'memb__pwd2' => $post['pass'],
       //'fpas_ques' => $post['squestion'],
       //'fpas_answ' => $post['sanswer'],
       //'country' => $post['country'],
       //'gender' => $post['gender'],
     );
-    $this->db->insert($this->t_memb_info, $data);
-    $data = array(
-      'ends_days' => '2005',
-      'chek_code' => '1',
-      'used_time' => 1234,
-      'memb___id' => $post['user'],
-      'memb_name' => $post['user'],
-      'memb_guid' => 1,
-      'sno__numb' => '7',
-      'Bill_Section' => '6',
-      'Bill_value' => '3',
-      'Bill_Hour' => '6',
-      'Surplus_Point' => '6',
-      'Surplus_Minute' => '2003-11-23 10:36:00',
-      'Increase_Days' => '0'
-    );
-    //$this->db->insert('dbo.VI_CURR_INFO', $data);
-    return TRUE;
+    return $this->db->insert($this->t_memb_info, $data);
   }
 
   function logged(){
@@ -117,9 +106,11 @@ class User_model extends Model{
   function checkServer(){
     $ip = $this->config->item('server_ip');
     $port = $this->config->item('server_port');
+    //Timeout in seconds
+    $timeout = 1;
 
     if ($ip){
-      $fp = @fsockopen($ip, $port, $errno, $errstr,5);
+      $fp = @fsockopen($ip, $port, $errno, $errstr, $timeout);
       if(!$fp) {
         return FALSE;
       } else {
