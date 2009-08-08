@@ -46,6 +46,7 @@ class Install extends Controller{
           if ($this->install_model->createTables()){
             redirect('install/step2');
           } else {
+            $this->load->view('install/indextpl', $data);
             die('Cannot create configuration table');
           }
         } else {
