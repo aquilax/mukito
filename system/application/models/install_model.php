@@ -73,7 +73,7 @@ class Install_model extends Model{
     $this->addAdminField();
     $this->dbforge->add_field($fields);
     //    $this->dbforge->add_key('id', TRUE);
-    if ($this->dbforge->create_table('mukito', TRUE)){
+    if ($this->dbforge->create_table('mukito')){
       //Init settings
       $this->db->truncate('mukito');
       $this->_addKv('base_url', 'http://'.$_SERVER['HTTP_HOST'].'/');
