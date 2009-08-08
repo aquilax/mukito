@@ -25,5 +25,17 @@ class Config_model extends Model{
     }
     return array();
   }
+
+  function updateSettings($post){
+    foreach ($post as $key => $val){
+      $data = array(
+        'name' => $key,
+        'val' => $val
+      );
+      $this->db->where('name', $key);
+      $this->db->update('mukito', $data);
+    }
+    return TRUE;
+  }
 }
 ?>

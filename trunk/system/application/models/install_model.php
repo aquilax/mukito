@@ -14,7 +14,7 @@ class Install_model extends Model{
   // DSN format
   // $dsn = 'dbdriver://username:password@hostname/database';
   //TODO: make this odbc
-  var $dsnTemplate = 'mysql://%s:%s@%s/%s';
+  var $dsnTemplate = 'odbc://%s:%s@%s/%s?pconnect=true';
   var $configFile = 'application/config/mukito.php';
 
   function Install_model(){
@@ -53,10 +53,10 @@ class Install_model extends Model{
     $this->load->dbforge();
     $fields = array(
       'id' => array(
-        'type' => 'INT',
-        'constraint' => 5,
-        'unsigned' => TRUE,
-        'auto_increment' => TRUE
+        'type' => 'int IDENTITY(1,1)PRIMARY KEY CLUSTERED',
+//        'constraint' => 5,
+//        'unsigned' => TRUE,
+//        'auto_increment' => TRUE
       ),
       'name' => array(
         'type' => 'VARCHAR',
@@ -69,8 +69,10 @@ class Install_model extends Model{
         'default' => '',
       )
     );
+    $this->addResets();
+    $this->addAdminField();
     $this->dbforge->add_field($fields);
-    $this->dbforge->add_key('id', TRUE);
+    //    $this->dbforge->add_key('id', TRUE);
     if ($this->dbforge->create_table('mukito', TRUE)){
       //Init settings
       $this->db->truncate('mukito');
@@ -104,6 +106,30 @@ class Install_model extends Model{
   function _addKv($key, $value){
     $data = array('name' => $key, 'val' => $value);
     $this->db->insert('mukito', $data);
+  }
+
+  function addResets(){
+    $fields = array(
+      'resets' => array(
+        'type' => 'INT',
+        'null' => FALSE,
+        'unsigned' => TRUE,
+        'dafault' => 0
+      )
+    );
+    $this->dbforge->add_column('Character', $fields);
+  }
+
+  function addAdminField(){
+    $fields = array(
+      'admin' => array(
+        'type' => 'INT',
+        'null' => FALSE,
+        'unsigned' => TRUE,
+        'dafault' => 0
+      )
+    );
+    $this->dbforge->add_column('MEMB_INFO', $fields);
   }
 }
 ?>
